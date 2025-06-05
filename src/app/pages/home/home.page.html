@@ -1,0 +1,104 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Noticias de Rick&Morty</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <h2>Subir foto de perfil</h2>
+  <div class="profileConfiguration">
+    <input type="file" (change)="onFileSelected($event)" />
+    <ion-button (click)="upload()">Subir</ion-button>
+
+    <div *ngIf="uploadedUrl">
+      <p>Archivo subido con éxito:</p>
+      <a [href]="uploadedUrl" target="_blank" >{{ uploadedUrl }}</a>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div>
+      <h3>Mi foto de perfil</h3>
+      <img
+    [src]="userPhotoUrl"
+    alt="Foto de perfil"
+    width="120"
+    height="120"
+    style="border-radius: 50%; object-fit: cover;"/>
+      <h3>Usuario: </h3>
+      <h5> {{userName}} </h5>
+ 
+    </div>
+    <br>
+  </div>
+    <button (click)="navigateToNews('/chat')" style="background-color: yellow; padding: 10px; width: 100px;" name="comentario">Ir al foro de noticias</button>
+
+    <div style="text-align: center; margin-top: 30px; margin-bottom: 30px; background-color: black; color: white;"> <strong> Buscar personaje para crear noticia </strong> </div>
+
+
+  <!-- Buscador centrado -->
+  <div class="busqueda-container">
+    <ion-card>
+      <ion-card-content>
+        <ion-input
+          [(ngModel)]="characterName"
+          placeholder="Ingrese el nombre del personaje buscado"
+          type="text">
+        </ion-input>
+        
+        <ion-button expand="block" (click)="getCharacterData(characterName)">
+          Buscar
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+  <!-- Resultado del buscador -->
+  <div *ngIf="characterData">
+    <ion-grid style="margin: auto;" class="gridSearchedCharacter">
+      <ion-row>
+        <ion-col size="6" *ngFor="let character of characterData.results; let i = index">
+          <ion-card class="character-card">
+            <!-- src="{{getImageUrl(i)}}" -->
+            <img [src]="character.image" alt="{{ character.name }}" />
+            <ion-card-header>
+              <ion-card-title>{{ character.name | titlecase }}</ion-card-title>
+              <button (click)="navigateToPage('/detalles', character)" style="background-color: yellow;" name="comentario">Ver detalles y crear noticia</button>
+            </ion-card-header>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <br>
+  <div style="text-align: center; margin-top: 30px; margin-bottom: 30px; background-color: black; color: white;"> <strong> Todos los personajes </strong> </div>
+
+
+
+  <div>
+  <!-- Lista de personajes cargados -->
+    <ion-grid style="margin: auto;" class="gridCharacter">
+      <ion-row>
+        <ion-col size="6" *ngFor="let character of characters; let i = index">
+          <ion-card class="character-card">
+            <!-- src="{{getImageUrl(i)}}" -->
+            <img [src]="getImageUrl(i)" alt="{{ character.name }}" />
+            <ion-card-header>
+              <ion-card-title>{{ character.name | titlecase }}</ion-card-title>
+            </ion-card-header>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <!-- Scroll infinito -->
+  <ion-infinite-scroll (ionInfinite)="loadCharacters($event)" threshold="100px">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Cargando más personajes...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  
+</ion-content>

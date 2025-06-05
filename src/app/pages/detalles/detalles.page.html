@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Crear una nueva noticia</ion-title>
+  </ion-toolbar>
+</ion-header>
+<button expand="block" (click)="navigateToHome()" style="background-color: yellow; padding: 10px; width: 100px;">Volver al home</button>
+
+<ion-content class="ion-padding">
+
+  
+
+<ion-content class="ion-padding">
+
+  <div *ngIf="characterData">
+    <h2>{{ characterData.name | titlecase }}</h2>
+    <img [src]="characterData.image" alt="Imagen del personaje" />
+    <p><strong>Id:</strong> {{ characterData.id }}</p>
+    <p><strong>Nombre:</strong> {{ characterData.name }}</p>
+    <p><strong>Status:</strong> {{ characterData.status }}</p>
+    <p><strong>Especie:</strong> {{ characterData.species }}</p>
+    <p><strong>Género:</strong> {{ characterData.gender }}</p>
+    <p><strong>Planeta de oringen:</strong> {{ characterData.origin.name }}</p>
+    <p><strong>Localización actual:</strong> {{ characterData.location.name }}</p>
+    <h4>Noticia del personaje</h4>
+    <textarea [(ngModel)]="comentario" placeholder="Escribe un comentario" fill="outline" name="comentario"></textarea>
+
+    <h4>Foto a subir</h4>
+    <input type="file" (change)="onFileSelected($event)" />
+
+
+    <br>
+    <br>
+    <br>
+    <button expand="block" (click)="sendContent()" style="background-color: yellow; padding: 10px; width: 100px;">Enviar a firebase</button>
+  </div>
+
+</ion-content>

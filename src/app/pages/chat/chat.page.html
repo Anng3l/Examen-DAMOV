@@ -1,0 +1,34 @@
+<ion-content>
+  <button (click)="navigateToHome()" style="background-color: yellow; padding: 10px; width: 100px;" name="comentario">Ir al foro de noticias</button>
+  <ng-container *ngFor="let message of messages; let last = last">
+    <ion-card>
+      <ion-card-header>
+        <ion-item lines="none">
+          <ion-avatar slot="start">
+            <img [src]="message.profilePhoto || 'assets/default-avatar.png'" alt="Foto de perfil" width="120"
+              height="120"
+              style="border-radius: 50%; object-fit: cover;">
+          </ion-avatar>
+          <ion-label>
+            <h2>{{ message.userEmail }}</h2>
+            <p>{{ message.date }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-card-header>
+
+      <ion-card-content>
+        <p><strong>Comentario:</strong></p>
+        <p>{{ message.comentario }}</p>
+
+        <div *ngIf="message.photo">
+          <ion-img [src]="message.photo"></ion-img>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Línea de separación (excepto en la última card) -->
+    <ion-item-divider *ngIf="!last" style="--background: transparent; --inner-padding-end: 0; margin: 8px 0;">
+      <div style="width: 100%; height: 1px; background-color: #ccc;"></div>
+    </ion-item-divider>
+  </ng-container>
+</ion-content>
